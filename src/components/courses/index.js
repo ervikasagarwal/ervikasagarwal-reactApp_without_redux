@@ -27,6 +27,31 @@ class Courses extends React.Component {
 
         this.setState({ showCourseForm: true, showDetails: false, formHeading: 'Add New Course', currentEvent: 'add', courseBeforEdit: {} });
     }
+    deleteBtnClicked = async (id)=>{
+        if (window.confirm('Are you sure you want to delete this record ?')) {
+     
+            // const res = await fetch('http://localhost:6789/course', {
+            //   method: 'delete',
+            //   headers: {
+            //     'Content-Type': 'application/json',
+            //   },
+            //   body: JSON.stringify({id}),
+            // });
+            const res = {ok:1}; // temp
+            if(res.ok){
+                //const data = await res.json();
+                const data = { n:1}   //temp
+                if(data.n>0){
+                    const newCourses= this.state.courses.filter((course)=>{
+                                        return course.id !== id;
+                    });
+                    this.setState({ showCourseForm: false, showDetails: true,courses:newCourses});
+                   
+                }
+            }
+          }
+
+    }
     backBtnClicked = () => {
         this.setState({ showCourseForm: false, showDetails: true });
 
@@ -104,7 +129,7 @@ class Courses extends React.Component {
         return (
             <div className="row">
 
-                {this.state.showDetails && <CourseTable courses={this.state.courses} editBtnClicked={(course) => this.editBtnClicked(course)} addBtnClicked={() => this.addBtnClicked()} />
+                {this.state.showDetails && <CourseTable courses={this.state.courses} editBtnClicked={(course) => this.editBtnClicked(course)} addBtnClicked={() => this.addBtnClicked()} deleteBtnClicked={(id)=>{this.deleteBtnClicked(id)}}/>
 
                 }
                 {this.state.showCourseForm && <CourseForm course={this.state.courseBeforEdit} heading={this.state.formHeading} backBtnClicked={() => { this.backBtnClicked() }} handleSubmit={(event) => { this.handleFormSubmit(event) }} />}
