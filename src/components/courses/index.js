@@ -81,7 +81,7 @@ class Courses extends React.Component {
                 // const data = await res.json();
                 // const id = data.insertId;
                 const id = Math.max.apply(Math, this.state.courses.map(function (course) { return course.id; })) + 1;
-                alert('new id ' + id)
+                
                 const newCourse = { id, courseName, author, language, length };
                 const { courses } = this.state;
                 courses.push(newCourse);
